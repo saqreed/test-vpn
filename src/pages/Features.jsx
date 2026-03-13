@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Shield, Lock, Zap, Globe, Server, Eye, Wifi, Smartphone, RefreshCw, Clock, CheckCircle, ArrowRight } from 'lucide-react'
+import SEO from '../components/SEO'
 
 function FU({ children, delay = 0 }) {
   return (
@@ -44,6 +45,12 @@ const W = { maxWidth:1180, margin:'0 auto', padding:'0 28px' }
 export default function Features() {
   return (
     <div style={{ overflowX:'hidden' }}>
+      <SEO
+        title="VPN Features — AES-256 Encryption, Kill Switch & More"
+        description="Explore CloudVPN's powerful features: AES-256 encryption, WireGuard protocol, zero-log policy, kill switch, DNS leak protection, split tunneling and 100+ server locations."
+        path="/features"
+        keywords="VPN features, AES-256 encryption, WireGuard VPN, kill switch VPN, DNS leak protection, split tunneling, zero log VPN, VPN protocols"
+      />
 
       <section className="bg-mesh" style={{ paddingTop:120, paddingBottom:80, position:'relative', overflow:'hidden' }}>
         <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px)', backgroundSize:'38px 38px' }} />
@@ -63,12 +70,12 @@ export default function Features() {
         </div>
         <div style={{ position:'absolute', bottom:0, left:0, right:0, lineHeight:0 }}>
           <svg viewBox="0 0 1440 60" fill="none" style={{ width:'100%', display:'block' }}>
-            <path d="M0 60L1440 60L1440 18C1080 60 720 8 360 44L0 18Z" fill="#ffffff" />
+            <path d="M0 60L1440 60L1440 18C1080 60 720 8 360 44L0 18Z" fill="var(--bg)" />
           </svg>
         </div>
       </section>
 
-      <section style={{ background:'#fff', padding:'90px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'90px 0' }}>
         <div style={{ ...W }}>
           {MAIN.map(({ Icon, title, desc, points }, i) => (
             <FU key={title}>
@@ -77,18 +84,18 @@ export default function Features() {
                   <div className="vpn-gradient" style={{ width:54, height:54, borderRadius:14, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:20, boxShadow:'0 6px 18px rgba(29,78,216,0.3)' }}>
                     <Icon size={25} color="#fff" />
                   </div>
-                  <h2 style={{ fontSize:'clamp(20px,2.6vw,32px)', fontWeight:900, color:'#0f172a', letterSpacing:'-0.5px', marginBottom:12 }}>{title}</h2>
-                  <p style={{ fontSize:16, color:'#64748b', lineHeight:1.75, marginBottom:20 }}>{desc}</p>
+                  <h2 style={{ fontSize:'clamp(20px,2.6vw,32px)', fontWeight:900, color:'var(--text)', letterSpacing:'-0.5px', marginBottom:12 }}>{title}</h2>
+                  <p style={{ fontSize:16, color:'var(--text-3)', lineHeight:1.75, marginBottom:20 }}>{desc}</p>
                   <ul style={{ listStyle:'none', display:'flex', flexDirection:'column', gap:9 }}>
                     {points.map(pt => (
-                      <li key={pt} style={{ display:'flex', alignItems:'center', gap:10, fontSize:14, fontWeight:500, color:'#334155' }}>
+                      <li key={pt} style={{ display:'flex', alignItems:'center', gap:10, fontSize:14, fontWeight:500, color:'var(--text-2)' }}>
                         <CheckCircle size={15} color="#2563eb" style={{ flexShrink:0 }} />{pt}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div style={{ flex:'1 1 260px', display:'flex', justifyContent:'center' }}>
-                  <div style={{ width:230, height:230, background:'linear-gradient(135deg,#eff6ff,#dbeafe)', borderRadius:22, display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <div style={{ width:230, height:230, background:'var(--bg-stat)', borderRadius:22, display:'flex', alignItems:'center', justifyContent:'center' }}>
                     <Icon size={95} color="#93c5fd" strokeWidth={1} />
                   </div>
                 </div>
@@ -98,25 +105,25 @@ export default function Features() {
         </div>
       </section>
 
-      <ParallaxSect bg="linear-gradient(135deg,#f0f7ff,#dbeafe 60%,#bfdbfe)">
+      <ParallaxSect bg="var(--bg-sect)">
         <div style={{ ...W }}>
           <FU>
             <div style={{ textAlign:'center', marginBottom:48 }}>
-              <h2 style={{ fontSize:'clamp(24px,3vw,40px)', fontWeight:900, color:'#0f172a', letterSpacing:'-0.6px' }}>And much more</h2>
-              <p style={{ color:'#64748b', fontSize:16, marginTop:10, maxWidth:420, margin:'10px auto 0' }}>Every detail designed with your privacy in mind.</p>
+              <h2 style={{ fontSize:'clamp(24px,3vw,40px)', fontWeight:900, color:'var(--text)', letterSpacing:'-0.6px' }}>And much more</h2>
+              <p style={{ color:'var(--text-3)', fontSize:16, marginTop:10, maxWidth:420, margin:'10px auto 0' }}>Every detail designed with your privacy in mind.</p>
             </div>
           </FU>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))', gap:14 }}>
             {GRID.map(({ Icon, title, desc }, i) => (
               <FU key={title} delay={i*0.05}>
-                <div style={{ background:'#fff', borderRadius:15, padding:'24px 20px', border:'1px solid rgba(219,234,254,0.9)', transition:'box-shadow 0.22s,transform 0.22s', cursor:'default' }}
+                <div style={{ background:'var(--bg-card)', borderRadius:15, padding:'24px 20px', border:'1px solid var(--border)', transition:'box-shadow 0.22s,transform 0.22s', cursor:'default' }}
                   onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 10px 28px rgba(59,130,246,0.12)'; e.currentTarget.style.transform='translateY(-3px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='translateY(0)' }}>
                   <div className="vpn-gradient" style={{ width:42, height:42, borderRadius:11, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:13, boxShadow:'0 3px 10px rgba(29,78,216,0.25)' }}>
                     <Icon size={19} color="#fff" />
                   </div>
-                  <h3 style={{ fontSize:14, fontWeight:700, color:'#0f172a', marginBottom:5 }}>{title}</h3>
-                  <p style={{ fontSize:13, color:'#64748b', lineHeight:1.6 }}>{desc}</p>
+                  <h3 style={{ fontSize:14, fontWeight:700, color:'var(--text)', marginBottom:5 }}>{title}</h3>
+                  <p style={{ fontSize:13, color:'var(--text-3)', lineHeight:1.6 }}>{desc}</p>
                 </div>
               </FU>
             ))}
@@ -124,13 +131,13 @@ export default function Features() {
         </div>
       </ParallaxSect>
 
-      <section style={{ background:'#fff', padding:'90px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'90px 0' }}>
         <div style={{ maxWidth:780, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div className="vpn-gradient-anim" style={{ borderRadius:22, padding:'60px 40px', textAlign:'center', boxShadow:'0 20px 60px rgba(29,78,216,0.32)', position:'relative', overflow:'hidden' }}>
               <div style={{ position:'absolute', top:-40, right:-40, width:160, height:160, borderRadius:'50%', background:'rgba(255,255,255,0.07)', pointerEvents:'none' }} />
               <h2 style={{ fontSize:'clamp(22px,3vw,36px)', fontWeight:900, color:'#fff', marginBottom:12, letterSpacing:'-0.5px', position:'relative' }}>Ready to get protected?</h2>
-              <p style={{ fontSize:16, color:'rgba(255,255,255,0.7)', marginBottom:30, position:'relative' }}>Start your free 30-day trial. No credit card required.</p>
+              <p style={{ fontSize:16, color:'var(--text-3)', marginBottom:30, position:'relative' }}>Start your free 30-day trial. No credit card required.</p>
               <Link to="/pricing" style={{ display:'inline-flex', alignItems:'center', gap:8, background:'#fff', color:'#1d4ed8', fontWeight:700, fontSize:15, padding:'13px 28px', borderRadius:12, textDecoration:'none', transition:'transform 0.18s', position:'relative' }}
                 onMouseEnter={e=>e.currentTarget.style.transform='scale(1.04)'}
                 onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>

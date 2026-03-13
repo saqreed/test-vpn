@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Shield, Lock, Zap, Globe, Server, CheckCircle, ArrowRight, Users, Award, TrendingUp, Star } from 'lucide-react'
+import SEO from '../components/SEO'
 
 const FEATURES = [
   { Icon: Lock,        title: 'AES-256 Encryption',  desc: 'Military-grade encryption trusted by governments worldwide.' },
@@ -100,6 +101,12 @@ export default function Home() {
 
   return (
     <div style={{ overflowX:'hidden' }}>
+      <SEO
+        title="Best VPN Service — Fast, Secure & Private"
+        description="CloudVPN delivers military-grade AES-256 encryption, zero-log policy, and blazing-fast speeds across 100+ server locations in 50+ countries. Try free for 30 days."
+        path="/"
+        keywords="VPN, best VPN, fast VPN, secure VPN, private VPN, AES-256, no-log VPN, unlimited VPN, cheap VPN, VPN service 2024"
+      />
 
       {/* ══ HERO ══ */}
       <section ref={heroRef} className="bg-mesh" style={{ minHeight:'100vh', display:'flex', alignItems:'center', position:'relative', overflow:'hidden' }}>
@@ -152,25 +159,25 @@ export default function Home() {
         </motion.div>
         <div style={{ position:'absolute', bottom:0, left:0, right:0, lineHeight:0 }}>
           <svg viewBox="0 0 1440 70" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width:'100%', display:'block' }}>
-            <path d="M0 70L1440 70L1440 22C1080 70 720 10 360 46L0 22Z" fill="#ffffff" />
+            <path d="M0 70L1440 70L1440 22C1080 70 720 10 360 46L0 22Z" fill="var(--bg)" />
           </svg>
         </div>
       </section>
 
       {/* ══ STATS ══ */}
-      <section style={{ background:'#fff', padding:'72px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'72px 0' }}>
         <div style={{ maxWidth:1180, margin:'0 auto', padding:'0 28px' }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:20 }}>
             {STATS.map(({ value, label, Icon }, i) => (
               <FU key={label} delay={i*0.08}>
-                <div style={{ background:'linear-gradient(135deg,#eff6ff,#dbeafe)', borderRadius:18, padding:'28px 20px', textAlign:'center', border:'1px solid rgba(219,234,254,0.8)', transition:'box-shadow 0.2s,transform 0.2s', cursor:'default' }}
+                <div style={{ background:'var(--bg-stat)', borderRadius:18, padding:'28px 20px', textAlign:'center', border:'1px solid var(--border)', transition:'box-shadow 0.2s,transform 0.2s', cursor:'default' }}
                   onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 8px 28px rgba(59,130,246,0.14)'; e.currentTarget.style.transform='translateY(-3px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='translateY(0)' }}>
                   <div className="vpn-gradient" style={{ width:46, height:46, borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 14px', boxShadow:'0 4px 12px rgba(29,78,216,0.28)' }}>
                     <Icon size={22} color="#fff" />
                   </div>
-                  <div style={{ fontSize:32, fontWeight:900, color:'#0f172a', letterSpacing:'-1px' }}>{value}</div>
-                  <div style={{ fontSize:13, color:'#64748b', fontWeight:500, marginTop:4 }}>{label}</div>
+                  <div style={{ fontSize:32, fontWeight:900, color:'var(--text)', letterSpacing:'-1px' }}>{value}</div>
+                  <div style={{ fontSize:13, color:'var(--text-3)', fontWeight:500, marginTop:4 }}>{label}</div>
                 </div>
               </FU>
             ))}
@@ -179,26 +186,26 @@ export default function Home() {
       </section>
 
       {/* ══ FEATURES (parallax) ══ */}
-      <ParallaxSect bg="linear-gradient(135deg,#f0f7ff 0%,#dbeafe 60%,#bfdbfe 100%)">
+      <ParallaxSect bg="var(--bg-sect)">
         <div style={{ maxWidth:1180, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div style={{ textAlign:'center', marginBottom:52 }}>
               <span style={{ fontSize:11, fontWeight:700, letterSpacing:2.5, textTransform:'uppercase', color:'#2563eb' }}>Why CloudVPN</span>
-              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'#0f172a', marginTop:10, letterSpacing:'-0.7px' }}>Everything you need to stay safe</h2>
-              <p style={{ color:'#64748b', fontSize:16, marginTop:12, maxWidth:500, margin:'12px auto 0' }}>Built for privacy-first people who demand top security without losing speed.</p>
+              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'var(--text)', marginTop:10, letterSpacing:'-0.7px' }}>Everything you need to stay safe</h2>
+              <p style={{ color:'var(--text-3)', fontSize:16, marginTop:12, maxWidth:500, margin:'12px auto 0' }}>Built for privacy-first people who demand top security without losing speed.</p>
             </div>
           </FU>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:18 }}>
             {FEATURES.map(({ Icon, title, desc }, i) => (
               <FU key={title} delay={i*0.07}>
-                <div style={{ background:'#fff', borderRadius:18, padding:'30px 26px', border:'1px solid rgba(219,234,254,0.9)', transition:'box-shadow 0.25s,transform 0.25s', cursor:'default' }}
+                <div style={{ background:'var(--bg-card)', borderRadius:18, padding:'30px 26px', border:'1px solid var(--border)', transition:'box-shadow 0.25s,transform 0.25s', cursor:'default' }}
                   onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 12px 36px rgba(59,130,246,0.12)'; e.currentTarget.style.transform='translateY(-4px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='translateY(0)' }}>
                   <div className="vpn-gradient" style={{ width:50, height:50, borderRadius:13, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:18, boxShadow:'0 4px 14px rgba(29,78,216,0.28)' }}>
                     <Icon size={23} color="#fff" />
                   </div>
-                  <h3 style={{ fontSize:15, fontWeight:700, color:'#0f172a', marginBottom:7 }}>{title}</h3>
-                  <p style={{ fontSize:14, color:'#64748b', lineHeight:1.65 }}>{desc}</p>
+                  <h3 style={{ fontSize:15, fontWeight:700, color:'var(--text)', marginBottom:7 }}>{title}</h3>
+                  <p style={{ fontSize:14, color:'var(--text-3)', lineHeight:1.65 }}>{desc}</p>
                 </div>
               </FU>
             ))}
@@ -207,12 +214,12 @@ export default function Home() {
       </ParallaxSect>
 
       {/* ══ HOW IT WORKS ══ */}
-      <section style={{ background:'#fff', padding:'90px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'90px 0' }}>
         <div style={{ maxWidth:1180, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div style={{ textAlign:'center', marginBottom:52 }}>
               <span style={{ fontSize:11, fontWeight:700, letterSpacing:2.5, textTransform:'uppercase', color:'#2563eb' }}>How It Works</span>
-              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'#0f172a', marginTop:10, letterSpacing:'-0.7px' }}>Up and running in 3 steps</h2>
+              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'var(--text)', marginTop:10, letterSpacing:'-0.7px' }}>Up and running in 3 steps</h2>
             </div>
           </FU>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', gap:24 }}>
@@ -222,8 +229,8 @@ export default function Home() {
                   <div className="vpn-gradient" style={{ width:72, height:72, borderRadius:18, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 20px', boxShadow:'0 6px 20px rgba(29,78,216,0.3)' }}>
                     <span style={{ fontSize:22, fontWeight:900, color:'#fff' }}>{n}</span>
                   </div>
-                  <h3 style={{ fontSize:17, fontWeight:700, color:'#0f172a', marginBottom:10 }}>{title}</h3>
-                  <p style={{ fontSize:14, color:'#64748b', lineHeight:1.7, maxWidth:260, margin:'0 auto' }}>{desc}</p>
+                  <h3 style={{ fontSize:17, fontWeight:700, color:'var(--text)', marginBottom:10 }}>{title}</h3>
+                  <p style={{ fontSize:14, color:'var(--text-3)', lineHeight:1.7, maxWidth:260, margin:'0 auto' }}>{desc}</p>
                 </div>
               </FU>
             ))}
@@ -232,29 +239,29 @@ export default function Home() {
       </section>
 
       {/* ══ TESTIMONIALS (parallax) ══ */}
-      <ParallaxSect bg="linear-gradient(135deg,#f0f7ff 0%,#dbeafe 60%,#bfdbfe 100%)">
+      <ParallaxSect bg="var(--bg-sect)">
         <div style={{ maxWidth:1180, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div style={{ textAlign:'center', marginBottom:52 }}>
               <span style={{ fontSize:11, fontWeight:700, letterSpacing:2.5, textTransform:'uppercase', color:'#2563eb' }}>Testimonials</span>
-              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'#0f172a', marginTop:10, letterSpacing:'-0.7px' }}>Loved by millions</h2>
+              <h2 style={{ fontSize:'clamp(26px,3.5vw,44px)', fontWeight:900, color:'var(--text)', marginTop:10, letterSpacing:'-0.7px' }}>Loved by millions</h2>
             </div>
           </FU>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:18 }}>
             {TESTIMONIALS.map(({ name, role, text }, i) => (
               <FU key={name} delay={i*0.08}>
-                <div style={{ background:'#fff', borderRadius:18, padding:'30px 26px', border:'1px solid rgba(219,234,254,0.9)', transition:'box-shadow 0.25s,transform 0.25s', cursor:'default' }}
+                <div style={{ background:'var(--bg-card)', borderRadius:18, padding:'30px 26px', border:'1px solid var(--border)', transition:'box-shadow 0.25s,transform 0.25s', cursor:'default' }}
                   onMouseEnter={e=>{ e.currentTarget.style.boxShadow='0 12px 36px rgba(59,130,246,0.12)'; e.currentTarget.style.transform='translateY(-4px)' }}
                   onMouseLeave={e=>{ e.currentTarget.style.boxShadow='none'; e.currentTarget.style.transform='translateY(0)' }}>
                   <div style={{ display:'flex', gap:3, marginBottom:14 }}>
                     {Array.from({length:5}).map((_,j) => <Star key={j} size={14} fill="#facc15" color="#facc15" />)}
                   </div>
-                  <p style={{ fontSize:14, color:'#475569', lineHeight:1.7, marginBottom:20 }}>"{text}"</p>
+                  <p style={{ fontSize:14, color:'var(--text-2)', lineHeight:1.7, marginBottom:20 }}>"{text}"</p>
                   <div style={{ display:'flex', alignItems:'center', gap:12 }}>
                     <div className="vpn-gradient" style={{ width:38, height:38, borderRadius:'50%', display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:700, fontSize:14, flexShrink:0 }}>{name[0]}</div>
                     <div>
-                      <div style={{ fontSize:14, fontWeight:700, color:'#0f172a' }}>{name}</div>
-                      <div style={{ fontSize:12, color:'#94a3b8' }}>{role}</div>
+                      <div style={{ fontSize:14, fontWeight:700, color:'var(--text)' }}>{name}</div>
+                      <div style={{ fontSize:12, color:'var(--text-muted)' }}>{role}</div>
                     </div>
                   </div>
                 </div>
@@ -265,7 +272,7 @@ export default function Home() {
       </ParallaxSect>
 
       {/* ══ CTA BANNER ══ */}
-      <section style={{ background:'#fff', padding:'90px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'90px 0' }}>
         <div style={{ maxWidth:880, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div className="vpn-gradient-anim" style={{ borderRadius:24, padding:'72px 48px', textAlign:'center', boxShadow:'0 20px 60px rgba(29,78,216,0.35)', position:'relative', overflow:'hidden' }}>

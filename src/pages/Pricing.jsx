@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CheckCircle, X, ArrowRight, Shield, Zap, Crown } from 'lucide-react'
+import SEO from '../components/SEO'
 
 function FU({ children, delay = 0 }) {
   return (
@@ -59,6 +60,12 @@ export default function Pricing() {
 
   return (
     <div style={{ overflowX:'hidden' }}>
+      <SEO
+        title="VPN Pricing — Plans from $0/mo | 30-Day Free Trial"
+        description="CloudVPN pricing plans: Free, Pro at $5.99/mo, and Business at $12.99/mo. All plans include AES-256 encryption, zero-log policy and 24/7 support. 30-day money-back guarantee."
+        path="/pricing"
+        keywords="VPN pricing, cheap VPN, VPN subscription, VPN plans, VPN free trial, best VPN deal, VPN monthly plan, VPN annual plan"
+      />
 
       {/* hero */}
       <section className="bg-mesh" style={{ paddingTop:120, paddingBottom:80, position:'relative', overflow:'hidden' }}>
@@ -90,13 +97,13 @@ export default function Pricing() {
         </div>
         <div style={{ position:'absolute', bottom:0, left:0, right:0, lineHeight:0 }}>
           <svg viewBox="0 0 1440 60" fill="none" style={{ width:'100%', display:'block' }}>
-            <path d="M0 60L1440 60L1440 18C1080 60 720 8 360 44L0 18Z" fill="#ffffff" />
+            <path d="M0 60L1440 60L1440 18C1080 60 720 8 360 44L0 18Z" fill="var(--bg)" />
           </svg>
         </div>
       </section>
 
       {/* plans */}
-      <section style={{ background:'#fff', padding:'72px 0 90px' }}>
+      <section style={{ background:'var(--bg)', padding:'72px 0 90px' }}>
         <div style={{ ...W }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20, alignItems:'start' }}>
             {PLANS.map((plan, i) => {
@@ -105,11 +112,11 @@ export default function Pricing() {
               return (
                 <FU key={plan.name} delay={i*0.1}>
                   <div style={{
-                    borderRadius:20, overflow:'hidden', border: plan.popular ? '2px solid #3b82f6' : '1px solid rgba(219,234,254,0.9)',
+                    borderRadius:20, overflow:'hidden', border: plan.popular ? '2px solid #3b82f6' : '1px solid var(--border)',
                     boxShadow: plan.popular ? '0 16px 48px rgba(59,130,246,0.18)' : '0 2px 12px rgba(0,0,0,0.05)',
                     transform: plan.popular ? 'scale(1.03)' : 'scale(1)',
                     transition:'box-shadow 0.25s,transform 0.25s',
-                    background:'#fff',
+                    background:'var(--bg-card)',
                   }}
                     onMouseEnter={e=>{ if(!plan.popular){ e.currentTarget.style.boxShadow='0 12px 36px rgba(59,130,246,0.12)'; e.currentTarget.style.transform='translateY(-4px)' }}}
                     onMouseLeave={e=>{ if(!plan.popular){ e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,0.05)'; e.currentTarget.style.transform='translateY(0)' }}}>
@@ -123,13 +130,13 @@ export default function Pricing() {
                       <div style={{ width:46, height:46, borderRadius:12, background:plan.gradient, display:'flex', alignItems:'center', justifyContent:'center', marginBottom:14, boxShadow:'0 4px 12px rgba(29,78,216,0.25)' }}>
                         <PIcon size={22} color="#fff" />
                       </div>
-                      <div style={{ fontSize:20, fontWeight:900, color:'#0f172a', marginBottom:4 }}>{plan.name}</div>
-                      <div style={{ fontSize:13, color:'#64748b', marginBottom:18 }}>{plan.desc}</div>
+                      <div style={{ fontSize:20, fontWeight:900, color:'var(--text)', marginBottom:4 }}>{plan.name}</div>
+                      <div style={{ fontSize:13, color:'var(--text-3)', marginBottom:18 }}>{plan.desc}</div>
                       <div style={{ marginBottom:20 }}>
-                        <span style={{ fontSize:42, fontWeight:900, color:'#0f172a', letterSpacing:'-1px' }}>
+                        <span style={{ fontSize:42, fontWeight:900, color:'var(--text)', letterSpacing:'-1px' }}>
                           {price === 0 ? 'Free' : `$${price}`}
                         </span>
-                        {price > 0 && <span style={{ fontSize:14, color:'#94a3b8', marginLeft:4 }}>/mo</span>}
+                        {price > 0 && <span style={{ fontSize:14, color:'var(--text-muted)', marginLeft:4 }}>/mo</span>}
                         {yearly && price > 0 && (
                           <div style={{ fontSize:12, color:'#22c55e', fontWeight:600, marginTop:4 }}>Billed ${(price*12).toFixed(2)}/year</div>
                         )}
@@ -137,7 +144,7 @@ export default function Pricing() {
                       <Link to="/contact" style={{
                         display:'block', textAlign:'center', padding:'12px', borderRadius:12, fontWeight:700, fontSize:14,
                         textDecoration:'none', marginBottom:22, transition:'transform 0.18s,box-shadow 0.18s',
-                        background: plan.popular ? 'linear-gradient(135deg,#1d4ed8,#3b82f6)' : 'rgba(59,130,246,0.07)',
+                        background: plan.popular ? 'linear-gradient(135deg,#1d4ed8,#3b82f6)' : 'var(--bg-2)',
                         color: plan.popular ? '#fff' : '#2563eb',
                         boxShadow: plan.popular ? '0 4px 16px rgba(29,78,216,0.35)' : 'none',
                       }}
@@ -150,8 +157,8 @@ export default function Pricing() {
                           <li key={f.t} style={{ display:'flex', alignItems:'center', gap:9, fontSize:13 }}>
                             {f.ok
                               ? <CheckCircle size={15} color="#3b82f6" style={{ flexShrink:0 }} />
-                              : <X size={15} color="#cbd5e1" style={{ flexShrink:0 }} />}
-                            <span style={{ color: f.ok ? '#334155' : '#94a3b8' }}>{f.t}</span>
+                              : <X size={15} color="var(--text-3)" style={{ flexShrink:0 }} />}
+                            <span style={{ color: f.ok ? 'var(--text)' : 'var(--text-3)' }}>{f.t}</span>
                           </li>
                         ))}
                       </ul>
@@ -165,15 +172,15 @@ export default function Pricing() {
       </section>
 
       {/* guarantee */}
-      <section style={{ background:'linear-gradient(135deg,#f0f7ff,#dbeafe 60%,#bfdbfe)', padding:'72px 0' }}>
+      <section style={{ background:'var(--bg-sect)', padding:'72px 0' }}>
         <div style={{ maxWidth:700, margin:'0 auto', padding:'0 28px' }}>
           <FU>
-            <div style={{ background:'#fff', borderRadius:20, padding:'44px 36px', textAlign:'center', border:'1px solid rgba(219,234,254,0.9)', boxShadow:'0 4px 20px rgba(59,130,246,0.08)' }}>
+            <div style={{ background:'var(--bg-card)', borderRadius:20, padding:'44px 36px', textAlign:'center', border:'1px solid var(--border)', boxShadow:'0 4px 20px rgba(59,130,246,0.08)' }}>
               <div className="vpn-gradient" style={{ width:60, height:60, borderRadius:16, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 18px', boxShadow:'0 6px 18px rgba(29,78,216,0.3)' }}>
                 <Shield size={28} color="#fff" />
               </div>
-              <h3 style={{ fontSize:22, fontWeight:900, color:'#0f172a', marginBottom:10 }}>30-Day Money-Back Guarantee</h3>
-              <p style={{ fontSize:15, color:'#64748b', lineHeight:1.7, maxWidth:440, margin:'0 auto' }}>
+              <h3 style={{ fontSize:22, fontWeight:900, color:'var(--text)', marginBottom:10 }}>30-Day Money-Back Guarantee</h3>
+              <p style={{ fontSize:15, color:'var(--text-3)', lineHeight:1.7, maxWidth:440, margin:'0 auto' }}>
                 Not satisfied? Get a full refund within 30 days — no questions asked. We are confident you will love CloudVPN.
               </p>
             </div>
@@ -182,25 +189,25 @@ export default function Pricing() {
       </section>
 
       {/* FAQ */}
-      <section style={{ background:'#fff', padding:'90px 0' }}>
+      <section style={{ background:'var(--bg)', padding:'90px 0' }}>
         <div style={{ maxWidth:700, margin:'0 auto', padding:'0 28px' }}>
           <FU>
             <div style={{ textAlign:'center', marginBottom:48 }}>
-              <h2 style={{ fontSize:'clamp(24px,3vw,38px)', fontWeight:900, color:'#0f172a', letterSpacing:'-0.6px' }}>Frequently Asked Questions</h2>
-              <p style={{ color:'#64748b', fontSize:15, marginTop:10 }}>Everything you need to know about our pricing.</p>
+              <h2 style={{ fontSize:'clamp(24px,3vw,38px)', fontWeight:900, color:'var(--text)', letterSpacing:'-0.6px' }}>Frequently Asked Questions</h2>
+              <p style={{ color:'var(--text-3)', fontSize:15, marginTop:10 }}>Everything you need to know about our pricing.</p>
             </div>
           </FU>
           <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
             {FAQ.map((item, i) => (
               <FU key={i} delay={i*0.05}>
-                <div style={{ border:'1px solid rgba(219,234,254,0.9)', borderRadius:14, overflow:'hidden' }}>
+                <div style={{ border:'1px solid var(--border)', borderRadius:14, overflow:'hidden' }}>
                   <button onClick={()=>setOpen(open===i?null:i)}
-                    style={{ width:'100%', textAlign:'left', padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', background: open===i ? '#f0f7ff' : '#fff', border:'none', cursor:'pointer', fontSize:15, fontWeight:600, color:'#0f172a', transition:'background 0.15s' }}>
+                    style={{ width:'100%', textAlign:'left', padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', background: open===i ? 'var(--bg-2)' : 'var(--bg-card)', border:'none', cursor:'pointer', fontSize:15, fontWeight:600, color:'var(--text)', transition:'background 0.15s' }}>
                     {item.q}
                     <ArrowRight size={17} color="#3b82f6" style={{ flexShrink:0, transform: open===i ? 'rotate(90deg)' : 'none', transition:'transform 0.2s' }} />
                   </button>
                   {open===i && (
-                    <div style={{ padding:'0 20px 18px', fontSize:14, color:'#64748b', lineHeight:1.7 }}>{item.a}</div>
+                    <div style={{ padding:'0 20px 18px', fontSize:14, color:'var(--text-3)', lineHeight:1.7, background:'var(--bg-card)' }}>{item.a}</div>
                   )}
                 </div>
               </FU>

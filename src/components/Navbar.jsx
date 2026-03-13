@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Shield, Menu, X } from 'lucide-react'
+import ThemeToggle from './ThemeToggle'
 
 const NAV = [
   { path: '/',          label: 'Home' },
   { path: '/features',  label: 'Features' },
   { path: '/pricing',   label: 'Pricing' },
+  { path: '/status',    label: 'Server Status' },
   { path: '/about',     label: 'About' },
   { path: '/contact',   label: 'Contact' },
 ]
@@ -14,15 +16,13 @@ export default function Navbar() {
   const [scrolled, setScrolled]   = useState(false)
   const [open,     setOpen]       = useState(false)
   const { pathname }              = useLocation()
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  // close mobile menu on route change
-  useEffect(() => { setOpen(false) }, [pathname])
+  useEffect(() => { setOpen(false) }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onHero = pathname === '/' && !scrolled
 
@@ -31,9 +31,9 @@ export default function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
         transition: 'background 0.3s, box-shadow 0.3s',
-        background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
+        background: scrolled ? 'var(--bg-card)' : 'transparent',
         boxShadow: scrolled ? '0 1px 24px rgba(59,130,246,0.10)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(219,234,254,0.8)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--border)' : 'none',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
       }}
     >
@@ -44,7 +44,7 @@ export default function Navbar() {
           <div className="vpn-gradient" style={{ width: 38, height: 38, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 14px rgba(29,78,216,0.35)', flexShrink: 0 }}>
             <Shield size={20} color="#fff" strokeWidth={2.5} />
           </div>
-          <span style={{ fontSize: 19, fontWeight: 800, color: onHero ? '#fff' : '#0f172a', letterSpacing: '-0.4px' }}>
+          <span style={{ fontSize: 19, fontWeight: 800, color: onHero ? '#fff' : 'var(--text)', letterSpacing: '-0.4px' }}>
             Cloud<span style={{ color: onHero ? 'rgba(255,255,255,0.7)' : '#3b82f6' }}>VPN</span>
           </span>
         </Link>
@@ -66,7 +66,7 @@ export default function Navbar() {
                   transition: 'all 0.18s',
                   color: active
                     ? (onHero ? '#fff' : '#2563eb')
-                    : (onHero ? 'rgba(255,255,255,0.75)' : '#475569'),
+                    : (onHero ? 'rgba(255,255,255,0.75)' : 'var(--text-2)'),
                   background: active
                     ? (onHero ? 'rgba(255,255,255,0.15)' : 'rgba(59,130,246,0.08)')
                     : 'transparent',
@@ -88,7 +88,8 @@ export default function Navbar() {
 
         {/* CTA buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }} className="hidden-mobile">
-          <Link to="/contact" style={{ fontSize: 14, fontWeight: 500, color: onHero ? 'rgba(255,255,255,0.8)' : '#475569', padding: '7px 14px', textDecoration: 'none', borderRadius: 8 }}>
+          <ThemeToggle />
+          <Link to="/contact" style={{ fontSize: 14, fontWeight: 500, color: onHero ? 'rgba(255,255,255,0.8)' : 'var(--text-2)', padding: '7px 14px', textDecoration: 'none', borderRadius: 8 }}>
             Log In
           </Link>
           <Link
@@ -105,7 +106,7 @@ export default function Navbar() {
         {/* Mobile burger */}
         <button
           onClick={() => setOpen(o => !o)}
-          style={{ display: 'none', padding: 8, borderRadius: 8, color: onHero ? '#fff' : '#334155', background: 'none', border: 'none', cursor: 'pointer' }}
+          style={{ display: 'none', padding: 8, borderRadius: 8, color: onHero ? '#fff' : 'var(--text)', background: 'none', border: 'none', cursor: 'pointer' }}
           className="show-mobile"
           aria-label="Menu"
         >
@@ -115,7 +116,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div style={{ background: '#fff', borderTop: '1px solid #dbeafe', padding: '12px 24px 20px' }}>
+        <div style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--border)', padding: '12px 24px 20px' }}>
           {NAV.map(({ path, label }) => (
             <Link
               key={path}
@@ -123,7 +124,7 @@ export default function Navbar() {
               style={{
                 display: 'block', padding: '12px 14px', borderRadius: 8,
                 fontSize: 15, fontWeight: 500, textDecoration: 'none',
-                color: pathname === path ? '#2563eb' : '#475569',
+                color: pathname === path ? '#2563eb' : 'var(--text-2)',
                 background: pathname === path ? 'rgba(59,130,246,0.07)' : 'transparent',
                 marginBottom: 2,
               }}

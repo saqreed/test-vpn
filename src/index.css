@@ -1,6 +1,37 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
-*, *::before, *::after {
+:root {
+  --bg:        #ffffff;
+  --bg-2:      #f8fafc;
+  --bg-card:   #ffffff;
+  --bg-sect:   linear-gradient(135deg,#f0f7ff,#dbeafe 60%,#bfdbfe);
+  --bg-stat:   linear-gradient(135deg,#eff6ff,#dbeafe);
+  --border:    rgba(219,234,254,0.9);
+  --text:      #0f172a;
+  --text-2:    #475569;
+  --text-3:    #64748b;
+  --text-muted:#94a3b8;
+  --fill-svg:  #ffffff;
+}
+
+.dark {
+  --bg:        #0f172a;
+  --bg-2:      #1e293b;
+  --bg-card:   #1e293b;
+  --bg-sect:   linear-gradient(135deg,#0f172a,#1e293b 60%,#0f172a);
+  --bg-stat:   linear-gradient(135deg,#1e293b,#0f2240);
+  --border:    rgba(59,130,246,0.18);
+  --text:      #f1f5f9;
+  --text-2:    #cbd5e1;
+  --text-3:    #94a3b8;
+  --text-muted:#64748b;
+  --fill-svg:  #0f172a;
+}
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -12,13 +43,31 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #ffffff;
-  color: #0f172a;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   line-height: 1.6;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.dark .glass-light {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.dark .glass-dark {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 #root {
@@ -37,32 +86,58 @@ button {
   font-family: inherit;
 }
 
-img, svg {
+img,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* ---- Animations ---- */
 @keyframes floatY {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-14px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
 }
 @keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes pulseRing {
-  0%   { transform: scale(1);   opacity: 0.6; }
-  100% { transform: scale(1.9); opacity: 0;   }
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
+  }
 }
 @keyframes gradShift {
-  0%   { background-position: 0%   50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0%   50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 @keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 /* ---- Utility classes ---- */
@@ -75,15 +150,15 @@ img, svg {
   animation: gradShift 7s ease infinite;
 }
 .glass-dark {
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .glass-light {
-  background: rgba(59,130,246,0.06);
+  background: rgba(59, 130, 246, 0.06);
   backdrop-filter: blur(8px);
-  border: 1px solid rgba(59,130,246,0.12);
+  border: 1px solid rgba(59, 130, 246, 0.12);
 }
 .float-anim {
   animation: floatY 5s ease-in-out infinite;
@@ -94,11 +169,33 @@ img, svg {
 .bg-mesh {
   background-color: #0f1f5c;
   background-image:
-    radial-gradient(ellipse 80% 60% at 60% 30%, rgba(59,130,246,0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 70%, rgba(29,78,216,0.4)  0%, transparent 60%);
+    radial-gradient(
+      ellipse 80% 60% at 60% 30%,
+      rgba(59, 130, 246, 0.35) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 20% 70%,
+      rgba(29, 78, 216, 0.4) 0%,
+      transparent 60%
+    );
 }
 
 /* ---- Scrollbar ---- */
-::-webkit-scrollbar       { width: 5px; }
-::-webkit-scrollbar-track { background: #f0f4ff; }
-::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 99px; }
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f0f4ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 99px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+}
