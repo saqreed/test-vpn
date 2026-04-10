@@ -12,6 +12,9 @@ export const useTheme = () => {
 
 export function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
+    }
     const savedTheme = localStorage.getItem('theme')
     return savedTheme ? savedTheme === 'dark' : false
   })
@@ -33,7 +36,7 @@ export function ThemeProvider({ children }) {
   }, [isDark])
 
   const toggleTheme = () => {
-    setIsDark(!isDark)
+    setIsDark((value) => !value)
   }
 
   return (

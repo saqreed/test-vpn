@@ -1,16 +1,74 @@
-# React + Vite
+# CloudVPN Marketing Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CloudVPN is a React + Vite marketing site for a VPN product. The project now includes:
 
-Currently, two official plugins are available:
+- Product pages for features, pricing, status, download, changelog, blog, careers, press, help center, community, and legal content
+- Shared SEO metadata, sitemap support, manifest, favicon, and Open Graph artwork
+- A Vitest + Testing Library setup for route, theme, form, and dashboard behavior
+- CI that runs lint, tests, and production build checks
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## React Compiler
+- React 19
+- Vite 7
+- React Router
+- Framer Motion
+- Tailwind CSS 4 utilities
+- Vitest + Testing Library
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+Use a modern Node.js release that matches Vite 7 requirements. Node 20 LTS or Node 22 LTS is recommended.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+Open the local Vite URL shown in the terminal.
+
+## Scripts
+
+```bash
+npm run dev        # start the development server
+npm run build      # create a production build
+npm run preview    # preview the production build locally
+npm run lint       # run ESLint
+npm run test       # start Vitest in watch mode
+npm run test:run   # run the test suite once
+npm run coverage   # generate a coverage report
+npm run check      # lint + test + build
+```
+
+## Project Structure
+
+```text
+src/
+  components/      shared UI, SEO, routing helpers
+  contexts/        theme context
+  data/            navigation and structured page content
+  pages/           route-level pages
+  test/            test setup and helpers
+public/
+  favicon.svg
+  og-image.svg
+  site.webmanifest
+  robots.txt
+  sitemap.xml
+```
+
+## Quality Notes
+
+- Unknown routes render a custom `404` page.
+- Footer links now point to real pages instead of placeholders.
+- Contact form labels are associated with controls for accessibility and testability.
+- GitHub Actions validates the app on Node 20 and Node 22.
+
+## Deployment
+
+The repository already includes SPA rewrite support for both Netlify and Vercel:
+
+- [`netlify.toml`](/Users/iegor/Desktop/test/test-vpn/netlify.toml)
+- [`vercel.json`](/Users/iegor/Desktop/test/test-vpn/vercel.json)
+
+Run `npm run build` before deploying and publish the `dist` directory.

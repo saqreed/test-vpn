@@ -1,34 +1,46 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import Home from './pages/Home'
-import Features from './pages/Features'
-import Pricing from './pages/Pricing'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Status from './pages/Status'
+import ScrollToTop from './components/ScrollToTop'
+import { appRoutes } from './routes'
 
 function App() {
   return (
     <ThemeProvider>
-      <Router>
+      <BrowserRouter>
         <div className="min-h-screen flex flex-col">
+          <ScrollToTop />
           <Navbar />
           <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/features" element={<Features />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/status" element={<Status />} />
-            </Routes>
+            <Suspense fallback={<RouteFallback />}>
+              <Routes>
+                {appRoutes.map((route) => (
+                  <Route key={route.path} path={route.path} element={route.element} />
+                ))}
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
         </div>
-      </Router>
+      </BrowserRouter>
     </ThemeProvider>
+  )
+}
+
+function RouteFallback() {
+  return (
+    <div style={{ minHeight: '60vh', display: 'grid', placeItems: 'center', padding: '120px 24px 48px' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: '#2563eb', marginBottom: 10 }}>
+          Loading page
+        </div>
+        <div style={{ fontSize: 15, color: 'var(--text-3)' }}>
+          Preparing the next CloudVPN view...
+        </div>
+      </div>
+    </div>
   )
 }
 
