@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -24,6 +25,7 @@ function App() {
           </main>
           <Footer />
         </div>
+        <SpeedInsights />
       </BrowserRouter>
     </ThemeProvider>
   )
