@@ -2,27 +2,19 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Shield, Menu, X } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
-
-const NAV = [
-  { path: '/',          label: 'Home' },
-  { path: '/features',  label: 'Features' },
-  { path: '/pricing',   label: 'Pricing' },
-  { path: '/status',    label: 'Server Status' },
-  { path: '/about',     label: 'About' },
-  { path: '/contact',   label: 'Contact' },
-]
+import { primaryNav } from '../data/siteContent'
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
-  const [open,     setOpen]       = useState(false)
-  const { pathname }              = useLocation()
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+  const closeMenu = () => setOpen(false)
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30)
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
-
-  useEffect(() => { setOpen(false) }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const onHero = pathname === '/' && !scrolled
 
@@ -51,7 +43,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="hidden-mobile">
-          {NAV.map(({ path, label }) => {
+          {primaryNav.map(({ path, label }) => {
             const active = pathname === path
             return (
               <Link
@@ -79,6 +71,7 @@ export default function Navbar() {
                   if (!active) e.currentTarget.style.background = 'transparent'
                   if (!active) e.currentTarget.style.color = onHero ? 'rgba(255,255,255,0.75)' : '#475569'
                 }}
+                onClick={closeMenu}
               >
                 {label}
               </Link>
@@ -89,8 +82,8 @@ export default function Navbar() {
         {/* CTA buttons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }} className="hidden-mobile">
           <ThemeToggle />
-          <Link to="/contact" style={{ fontSize: 14, fontWeight: 500, color: onHero ? 'rgba(255,255,255,0.8)' : 'var(--text-2)', padding: '7px 14px', textDecoration: 'none', borderRadius: 8 }}>
-            Log In
+          <Link to="/download" style={{ fontSize: 14, fontWeight: 500, color: onHero ? 'rgba(255,255,255,0.8)' : 'var(--text-2)', padding: '7px 14px', textDecoration: 'none', borderRadius: 8 }}>
+            Download App
           </Link>
           <Link
             to="/pricing"
@@ -98,6 +91,7 @@ export default function Navbar() {
             style={{ fontSize: 14, fontWeight: 700, color: '#fff', padding: '9px 22px', borderRadius: 10, boxShadow: '0 4px 14px rgba(29,78,216,0.4)', textDecoration: 'none', transition: 'transform 0.18s, box-shadow 0.18s' }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(29,78,216,0.5)' }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)';    e.currentTarget.style.boxShadow = '0 4px 14px rgba(29,78,216,0.4)' }}
+            onClick={closeMenu}
           >
             Get Started
           </Link>
@@ -117,7 +111,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--border)', padding: '12px 24px 20px' }}>
-          {NAV.map(({ path, label }) => (
+          {primaryNav.map(({ path, label }) => (
             <Link
               key={path}
               to={path}
@@ -128,14 +122,23 @@ export default function Navbar() {
                 background: pathname === path ? 'rgba(59,130,246,0.07)' : 'transparent',
                 marginBottom: 2,
               }}
+              onClick={closeMenu}
             >
               {label}
             </Link>
           ))}
           <Link
+            to="/download"
+            style={{ display: 'block', textAlign: 'center', marginTop: 12, padding: '12px', borderRadius: 10, color: 'var(--text)', fontWeight: 600, fontSize: 15, textDecoration: 'none', background: 'var(--bg-2)' }}
+            onClick={closeMenu}
+          >
+            Download App
+          </Link>
+          <Link
             to="/pricing"
             className="vpn-gradient"
             style={{ display: 'block', textAlign: 'center', marginTop: 12, padding: '13px', borderRadius: 10, color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}
+            onClick={closeMenu}
           >
             Get Started Free
           </Link>

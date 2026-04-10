@@ -1,0 +1,17 @@
+{
+  "name": "CloudVPN",
+  "short_name": "CloudVPN",
+  "description": "Fast, secure, private VPN access for every device.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08122b",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

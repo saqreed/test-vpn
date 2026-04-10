@@ -137,17 +137,17 @@ export default function Contact() {
                   <form onSubmit={hs} style={{ display:'flex', flexDirection:'column', gap:14 }}>
                     <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
                       <div>
-                        <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Full Name</label>
-                        <input name="name" value={form.name} onChange={hc} required placeholder="John Doe" style={INP} />
+                        <label htmlFor="contact-name" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Full Name</label>
+                        <input id="contact-name" name="name" value={form.name} onChange={hc} required placeholder="John Doe" style={INP} />
                       </div>
                       <div>
-                        <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Email</label>
-                        <input name="email" type="email" value={form.email} onChange={hc} required placeholder="john@example.com" style={INP} />
+                        <label htmlFor="contact-email" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Email</label>
+                        <input id="contact-email" name="email" type="email" value={form.email} onChange={hc} required placeholder="john@example.com" style={INP} />
                       </div>
                     </div>
                     <div>
-                      <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Subject</label>
-                      <select name="subject" value={form.subject} onChange={hc} required style={INP}>
+                      <label htmlFor="contact-subject" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Subject</label>
+                      <select id="contact-subject" name="subject" value={form.subject} onChange={hc} required style={INP}>
                         <option value="">Select a subject</option>
                         <option value="billing">Billing</option>
                         <option value="technical">Technical Support</option>
@@ -157,8 +157,8 @@ export default function Contact() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Message</label>
-                      <textarea name="message" value={form.message} onChange={hc} required rows={5} placeholder="How can we help?" style={{ ...INP, resize:'none' }} />
+                      <label htmlFor="contact-message" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Message</label>
+                      <textarea id="contact-message" name="message" value={form.message} onChange={hc} required rows={5} placeholder="How can we help?" style={{ ...INP, resize:'none' }} />
                     </div>
                     <button type="submit" disabled={loading} className="vpn-gradient"
                       style={{ width:'100%', padding:'13px', borderRadius:12, color:'#fff', fontWeight:700, fontSize:15, border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:'0 4px 16px rgba(29,78,216,0.35)', opacity: loading?0.7:1 }}>
