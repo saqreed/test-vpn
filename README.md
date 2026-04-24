@@ -37,6 +37,9 @@ npm run lint       # run ESLint
 npm run test       # start Vitest in watch mode
 npm run test:run   # run the test suite once
 npm run coverage   # generate a coverage report
+npm run e2e        # run Playwright smoke tests against a production preview
+npm run lhci       # run Lighthouse CI against the production preview
+npm run audit:prod # audit production dependencies
 npm run check      # lint + test + build
 ```
 
@@ -66,9 +69,13 @@ public/
 
 ## Deployment
 
-The repository already includes SPA rewrite support for both Netlify and Vercel:
+Vercel is the primary deployment target because the app uses Vercel Analytics and Speed Insights. The repository also keeps Netlify SPA rewrite support as a fallback:
 
-- [`netlify.toml`](/Users/iegor/Desktop/test/test-vpn/netlify.toml)
-- [`vercel.json`](/Users/iegor/Desktop/test/test-vpn/vercel.json)
+- `vercel.json`
+- `netlify.toml`
 
 Run `npm run build` before deploying and publish the `dist` directory.
+
+## Production Notes
+
+The site currently uses demo marketing copy and mock status/contact behavior when `VITE_CONTACT_ENDPOINT` and `VITE_STATUS_API_URL` are not configured. Verify all legal, privacy, company, and usage claims before production launch.

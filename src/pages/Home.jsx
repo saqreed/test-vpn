@@ -105,7 +105,7 @@ export default function Home() {
         title="Best VPN Service — Fast, Secure & Private"
         description="CloudVPN delivers military-grade AES-256 encryption, zero-log policy, and blazing-fast speeds across 100+ server locations in 50+ countries. Try free for 30 days."
         path="/"
-        keywords="VPN, best VPN, fast VPN, secure VPN, private VPN, AES-256, no-log VPN, unlimited VPN, cheap VPN, VPN service 2024"
+        keywords="VPN, best VPN, fast VPN, secure VPN, private VPN, AES-256, no-log VPN, unlimited VPN, cheap VPN, VPN service"
       />
 
       {/* ══ HERO ══ */}

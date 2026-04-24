@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      frontend-runtime:
+        patterns:
+          - react
+          - react-dom
+          - react-router-dom
+          - framer-motion
+      tooling:
+        patterns:
+          - vite
+          - vitest
+          - eslint*
+          - '@vitejs/*'
+          - '@testing-library/*'
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

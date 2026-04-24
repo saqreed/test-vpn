@@ -8,6 +8,8 @@ test('expands a region card when selected', async () => {
 
   renderWithProviders(<ServerStatusDashboard />)
 
+  expect(screen.getByText(/demo data/i)).toBeInTheDocument()
+
   await user.click(screen.getByText(/us east/i))
 
   expect(screen.getByText(/^Connections$/)).toBeInTheDocument()

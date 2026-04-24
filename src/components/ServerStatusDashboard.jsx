@@ -1,15 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Server, Activity, Users, Zap, AlertCircle, CheckCircle, Clock } from 'lucide-react'
-
-const REGIONS_INIT = [
-  { id: 'us-east',      name: 'US East',       flag: '🇺🇸', city: 'New York',    load: 45, status: 'optimal', latency: 11, connections: 34210, bandwidth: 3.2 },
-  { id: 'us-west',      name: 'US West',       flag: '🇺🇸', city: 'Los Angeles', load: 72, status: 'good',    latency: 18, connections: 51800, bandwidth: 2.8 },
-  { id: 'europe',       name: 'Europe',        flag: '🇪🇺', city: 'Frankfurt',   load: 38, status: 'optimal', latency:  9, connections: 28400, bandwidth: 4.1 },
-  { id: 'asia',         name: 'Asia',          flag: '🇯🇵', city: 'Tokyo',       load: 61, status: 'good',    latency: 22, connections: 43700, bandwidth: 2.4 },
-  { id: 'australia',    name: 'Australia',     flag: '🇦🇺', city: 'Sydney',      load: 25, status: 'optimal', latency: 14, connections: 12900, bandwidth: 1.9 },
-  { id: 'south-america',name: 'South America', flag: '🇧🇷', city: 'São Paulo',   load: 84, status: 'high',    latency: 27, connections: 61300, bandwidth: 1.5 },
-]
+import { advanceStatusSnapshot, demoStatusSnapshot, getStatusSnapshot } from '../services/status'
 
 const STATUS_COLOR = { optimal: '#22c55e', good: '#eab308', high: '#f97316', critical: '#ef4444' }
 const LOAD_COLOR   = (l) => l < 40 ? '#22c55e' : l < 70 ? '#eab308' : l < 85 ? '#f97316' : '#ef4444'
@@ -18,25 +10,36 @@ const STAT_CARD = { background: 'var(--bg-card)', borderRadius: 14, padding: '18
 
 export default function ServerStatusDashboard() {
   const [selectedRegion, setSelectedRegion] = useState(null)
-  const [regions, setRegions] = useState(REGIONS_INIT)
-  const [liveStats, setLiveStats] = useState({ totalUsers: 10428357, activeConnections: 894732, avgLatency: 12, uptime: 99.97 })
+  const [snapshot, setSnapshot] = useState(demoStatusSnapshot)
+  const { liveStats, regions } = snapshot
 
   useEffect(() => {
+    let active = true
+
+    getStatusSnapshot()
+      .then((nextSnapshot) => {
+        if (active) {
+          setSnapshot(nextSnapshot)
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setSnapshot(demoStatusSnapshot)
+        }
+      })
+
     const interval = setInterval(() => {
-      setLiveStats(prev => ({
-        totalUsers:        prev.totalUsers + Math.floor(Math.random() * 100 - 50),
-        activeConnections: Math.max(0, prev.activeConnections + Math.floor(Math.random() * 1000 - 500)),
-        avgLatency:        Math.max(8, Math.min(25, prev.avgLatency + (Math.random() - 0.5) * 2)),
-        uptime:            Math.min(100, prev.uptime + (Math.random() - 0.5) * 0.01),
-      }))
-      setRegions(prev => prev.map(r => ({
-        ...r,
-        load:        Math.max(5,  Math.min(99, r.load + Math.floor(Math.random() * 6 - 3))),
-        latency:     Math.max(5,  Math.min(50, r.latency + Math.floor(Math.random() * 4 - 2))),
-        connections: Math.max(100, r.connections + Math.floor(Math.random() * 1000 - 500)),
-      })))
+      setSnapshot((current) => (
+        current.mode === 'demo'
+          ? advanceStatusSnapshot(current)
+          : current
+      ))
     }, 3000)
-    return () => clearInterval(interval)
+
+    return () => {
+      active = false
+      clearInterval(interval)
+    }
   }, [])
 
   const LIVE = { fontSize: 11, fontWeight: 700, color: '#22c55e', background: 'rgba(34,197,94,0.12)', padding: '2px 7px', borderRadius: 999 }
@@ -53,6 +56,9 @@ export default function ServerStatusDashboard() {
         <p style={{ color: 'var(--text-3)', fontSize: 15, marginTop: 8 }}>
           Monitor our global VPN server network performance
         </p>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 14, padding: '4px 10px', borderRadius: 999, fontSize: 12, fontWeight: 700, color: snapshot.mode === 'demo' ? '#92400e' : '#166534', background: snapshot.mode === 'demo' ? 'rgba(245,158,11,0.15)' : 'rgba(34,197,94,0.14)' }}>
+          {snapshot.mode === 'demo' ? 'Demo data' : 'Live data'}
+        </div>
       </div>
 
       {/* Live Stats */}

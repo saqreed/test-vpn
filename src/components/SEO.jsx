@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async'
+import { getCanonicalUrl, siteConfig } from '../config/site'
 
-const SITE_URL = 'https://cloudvpn.io'
-const SITE_NAME = 'CloudVPN'
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`
+const SITE_NAME = siteConfig.brand.name
+const DEFAULT_IMAGE = `${siteConfig.siteUrl}/og-image.svg`
 
 export default function SEO({
   title,
@@ -14,7 +14,7 @@ export default function SEO({
   noIndex = false,
 }) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Your Privacy, Our Priority`
-  const url = `${SITE_URL}${path}`
+  const url = getCanonicalUrl(path)
   const robots = noIndex
     ? 'noindex, nofollow, noarchive'
     : 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'

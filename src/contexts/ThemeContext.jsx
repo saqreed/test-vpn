@@ -2,6 +2,12 @@ import { createContext, useContext, useState, useEffect } from 'react'
 
 const ThemeContext = createContext()
 
+function getSystemPrefersDark() {
+  return typeof window !== 'undefined'
+    && typeof window.matchMedia === 'function'
+    && window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
 export const useTheme = () => {
   const context = useContext(ThemeContext)
   if (!context) {
@@ -16,7 +22,7 @@ export function ThemeProvider({ children }) {
       return false
     }
     const savedTheme = localStorage.getItem('theme')
-    return savedTheme ? savedTheme === 'dark' : false
+    return savedTheme ? savedTheme === 'dark' : getSystemPrefersDark()
   })
 
   useEffect(() => {

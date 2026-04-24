@@ -86,10 +86,18 @@ export default function Pricing() {
           {/* toggle */}
           <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.3 }}
             className="glass-dark" style={{ display:'inline-flex', padding:5, borderRadius:14, gap:4 }}>
-            <button onClick={()=>setYearly(false)} style={{ padding:'9px 22px', borderRadius:10, fontSize:14, fontWeight:600, cursor:'pointer', border:'none', transition:'all 0.18s', background: !yearly ? '#fff' : 'transparent', color: !yearly ? '#1d4ed8' : 'rgba(255,255,255,0.75)' }}>
+            <button
+              onClick={()=>setYearly(false)}
+              aria-pressed={!yearly}
+              style={{ padding:'9px 22px', borderRadius:10, fontSize:14, fontWeight:600, cursor:'pointer', border:'none', transition:'all 0.18s', background: !yearly ? '#fff' : 'transparent', color: !yearly ? '#1d4ed8' : 'rgba(255,255,255,0.75)' }}
+            >
               Monthly
             </button>
-            <button onClick={()=>setYearly(true)} style={{ padding:'9px 22px', borderRadius:10, fontSize:14, fontWeight:600, cursor:'pointer', border:'none', transition:'all 0.18s', display:'flex', alignItems:'center', gap:8, background: yearly ? '#fff' : 'transparent', color: yearly ? '#1d4ed8' : 'rgba(255,255,255,0.75)' }}>
+            <button
+              onClick={()=>setYearly(true)}
+              aria-pressed={yearly}
+              style={{ padding:'9px 22px', borderRadius:10, fontSize:14, fontWeight:600, cursor:'pointer', border:'none', transition:'all 0.18s', display:'flex', alignItems:'center', gap:8, background: yearly ? '#fff' : 'transparent', color: yearly ? '#1d4ed8' : 'rgba(255,255,255,0.75)' }}
+            >
               Yearly
               <span style={{ background:'#4ade80', color:'#14532d', fontSize:11, fontWeight:700, padding:'2px 7px', borderRadius:999 }}>-40%</span>
             </button>
@@ -202,12 +210,14 @@ export default function Pricing() {
               <FU key={i} delay={i*0.05}>
                 <div style={{ border:'1px solid var(--border)', borderRadius:14, overflow:'hidden' }}>
                   <button onClick={()=>setOpen(open===i?null:i)}
+                    aria-expanded={open===i}
+                    aria-controls={`pricing-faq-${i}`}
                     style={{ width:'100%', textAlign:'left', padding:'18px 20px', display:'flex', alignItems:'center', justifyContent:'space-between', background: open===i ? 'var(--bg-2)' : 'var(--bg-card)', border:'none', cursor:'pointer', fontSize:15, fontWeight:600, color:'var(--text)', transition:'background 0.15s' }}>
                     {item.q}
                     <ArrowRight size={17} color="#3b82f6" style={{ flexShrink:0, transform: open===i ? 'rotate(90deg)' : 'none', transition:'transform 0.2s' }} />
                   </button>
                   {open===i && (
-                    <div style={{ padding:'0 20px 18px', fontSize:14, color:'var(--text-3)', lineHeight:1.7, background:'var(--bg-card)' }}>{item.a}</div>
+                    <div id={`pricing-faq-${i}`} style={{ padding:'0 20px 18px', fontSize:14, color:'var(--text-3)', lineHeight:1.7, background:'var(--bg-card)' }}>{item.a}</div>
                   )}
                 </div>
               </FU>

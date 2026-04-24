@@ -16,6 +16,19 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
+  useEffect(() => {
+    if (!open) return undefined
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   const onHero = pathname === '/' && !scrolled
 
   return (
@@ -100,9 +113,11 @@ export default function Navbar() {
         {/* Mobile burger */}
         <button
           onClick={() => setOpen(o => !o)}
-          style={{ display: 'none', padding: 8, borderRadius: 8, color: onHero ? '#fff' : 'var(--text)', background: 'none', border: 'none', cursor: 'pointer' }}
+          style={{ padding: 8, borderRadius: 8, color: onHero ? '#fff' : 'var(--text)', background: 'none', border: 'none', cursor: 'pointer' }}
           className="show-mobile"
-          aria-label="Menu"
+          aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -110,7 +125,11 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--border)', padding: '12px 24px 20px' }}>
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          style={{ background: 'var(--bg-card)', borderTop: '1px solid var(--border)', padding: '12px 24px 20px' }}
+        >
           {primaryNav.map(({ path, label }) => (
             <Link
               key={path}
@@ -142,10 +161,11 @@ export default function Navbar() {
           >
             Get Started Free
           </Link>
-        </div>
+        </nav>
       )}
 
       <style>{`
+        .show-mobile { display: none !important; }
         @media (max-width: 767px) {
           .hidden-mobile { display: none !important; }
           .show-mobile   { display: block !important; }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, MessageSquare, Headphones, BookOpen } from 'lucide-react'
 import SEO from '../components/SEO'
+import { submitContact } from '../services/contact'
 
 function FU({ children, delay = 0 }) {
   return (
@@ -31,11 +32,33 @@ export default function Contact() {
   const [form, setForm] = useState({ name:'', email:'', subject:'', message:'' })
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState({})
+  const [submitError, setSubmitError] = useState('')
 
-  function hc(e) { setForm({ ...form, [e.target.name]: e.target.value }) }
-  function hs(e) {
-    e.preventDefault(); setLoading(true)
-    setTimeout(() => { setLoading(false); setSent(true) }, 1400)
+  function hc(e) {
+    const { name, value } = e.target
+    setForm({ ...form, [name]: value })
+    setErrors((current) => ({ ...current, [name]: undefined }))
+    setSubmitError('')
+  }
+  async function hs(e) {
+    e.preventDefault()
+    setLoading(true)
+    setErrors({})
+    setSubmitError('')
+
+    try {
+      await submitContact(form)
+      setSent(true)
+    } catch (error) {
+      if (error.errors) {
+        setErrors(error.errors)
+      } else {
+        setSubmitError(error.message || 'Unable to send your message. Please try again.')
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -130,24 +153,31 @@ export default function Contact() {
                     </div>
                     <h3 style={{ fontSize:20, fontWeight:900, color:'var(--text)', marginBottom:8 }}>Message Sent!</h3>
                     <p style={{ fontSize:14, color:'var(--text-3)', maxWidth:260, margin:'0 auto 20px' }}>Our team will get back to you within 2 hours.</p>
-                    <button onClick={()=>{ setSent(false); setForm({ name:'', email:'', subject:'', message:'' }) }}
+                    <button onClick={()=>{ setSent(false); setForm({ name:'', email:'', subject:'', message:'' }); setErrors({}); setSubmitError('') }}
                       style={{ fontSize:13, color:'var(--text-2)', fontWeight:600, background:'none', border:'none', cursor:'pointer' }}>Send another message</button>
                   </div>
                 ) : (
-                  <form onSubmit={hs} style={{ display:'flex', flexDirection:'column', gap:14 }}>
-                    <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
+                  <form onSubmit={hs} noValidate style={{ display:'flex', flexDirection:'column', gap:14 }}>
+                    {submitError && (
+                      <div role="alert" style={{ padding:'10px 12px', borderRadius:10, background:'rgba(239,68,68,0.1)', color:'#dc2626', fontSize:13, fontWeight:600 }}>
+                        {submitError}
+                      </div>
+                    )}
+                    <div className="contact-form-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
                       <div>
                         <label htmlFor="contact-name" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Full Name</label>
-                        <input id="contact-name" name="name" value={form.name} onChange={hc} required placeholder="John Doe" style={INP} />
+                        <input id="contact-name" name="name" value={form.name} onChange={hc} required placeholder="John Doe" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? 'contact-name-error' : undefined} style={INP} />
+                        {errors.name && <div id="contact-name-error" role="alert" style={{ color:'#dc2626', fontSize:12, marginTop:5 }}>{errors.name}</div>}
                       </div>
                       <div>
                         <label htmlFor="contact-email" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Email</label>
-                        <input id="contact-email" name="email" type="email" value={form.email} onChange={hc} required placeholder="john@example.com" style={INP} />
+                        <input id="contact-email" name="email" type="email" value={form.email} onChange={hc} required placeholder="john@example.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'contact-email-error' : undefined} style={INP} />
+                        {errors.email && <div id="contact-email-error" role="alert" style={{ color:'#dc2626', fontSize:12, marginTop:5 }}>{errors.email}</div>}
                       </div>
                     </div>
                     <div>
                       <label htmlFor="contact-subject" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Subject</label>
-                      <select id="contact-subject" name="subject" value={form.subject} onChange={hc} required style={INP}>
+                      <select id="contact-subject" name="subject" value={form.subject} onChange={hc} required aria-invalid={Boolean(errors.subject)} aria-describedby={errors.subject ? 'contact-subject-error' : undefined} style={INP}>
                         <option value="">Select a subject</option>
                         <option value="billing">Billing</option>
                         <option value="technical">Technical Support</option>
@@ -155,10 +185,12 @@ export default function Contact() {
                         <option value="sales">Sales</option>
                         <option value="other">Other</option>
                       </select>
+                      {errors.subject && <div id="contact-subject-error" role="alert" style={{ color:'#dc2626', fontSize:12, marginTop:5 }}>{errors.subject}</div>}
                     </div>
                     <div>
                       <label htmlFor="contact-message" style={{ display:'block', fontSize:13, fontWeight:600, color:'var(--text-2)', marginBottom:5 }}>Message</label>
-                      <textarea id="contact-message" name="message" value={form.message} onChange={hc} required rows={5} placeholder="How can we help?" style={{ ...INP, resize:'none' }} />
+                      <textarea id="contact-message" name="message" value={form.message} onChange={hc} required rows={5} placeholder="How can we help?" aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'contact-message-error' : undefined} style={{ ...INP, resize:'none' }} />
+                      {errors.message && <div id="contact-message-error" role="alert" style={{ color:'#dc2626', fontSize:12, marginTop:5 }}>{errors.message}</div>}
                     </div>
                     <button type="submit" disabled={loading} className="vpn-gradient"
                       style={{ width:'100%', padding:'13px', borderRadius:12, color:'#fff', fontWeight:700, fontSize:15, border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', gap:8, boxShadow:'0 4px 16px rgba(29,78,216,0.35)', opacity: loading?0.7:1 }}>

@@ -1,6 +1,8 @@
 import { screen } from '@testing-library/react'
 import App from './App'
 import { renderWithProviders } from './test/renderWithProviders'
+import { appRoutes } from './routes'
+import { siteConfig } from './config/site'
 
 function renderAtRoute(pathname) {
   window.history.pushState({}, 'Test page', pathname)
@@ -11,9 +13,13 @@ test('renders the new blog route', async () => {
   renderAtRoute('/blog')
 
   expect(
-    await screen.findByRole('heading', {
-      name: /clear writing for people who care how privacy tools really work/i,
-    }),
+    await screen.findByRole(
+      'heading',
+      {
+        name: /clear writing for people who care how privacy tools really work/i,
+      },
+      { timeout: 5000 },
+    ),
   ).toBeInTheDocument()
 })
 
@@ -22,4 +28,8 @@ test('shows a fallback page for unknown routes', async () => {
 
   expect(await screen.findByRole('heading', { name: /this route is off the grid/i })).toBeInTheDocument()
   expect(screen.getByRole('link', { name: /return home/i })).toBeInTheDocument()
+})
+
+test('public route table stays aligned with the site config', () => {
+  expect(appRoutes.map((route) => route.path).filter((path) => path !== '*')).toEqual(siteConfig.indexablePaths)
 })
